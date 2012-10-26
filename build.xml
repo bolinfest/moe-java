@@ -43,6 +43,7 @@
 			<zipfileset src="lib/args4j-2.0.9.jar"/>
 			<zipfileset src="lib/gson-2.2.jar"/>
 			<zipfileset src="lib/guava-r09.jar"/>
+			<zipfileset src="lib/guice-3.0.jar"/>
 		</jar>
 	</target>
 
