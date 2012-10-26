@@ -3,20 +3,20 @@
 package com.google.devtools.moe.client.tools;
 
 import static org.easymock.EasyMock.expect;
-import static com.google.devtools.moe.client.tools.FileDifference.Comparison;
 
 import com.google.common.collect.ImmutableList;
 import com.google.devtools.moe.client.AppContext;
 import com.google.devtools.moe.client.CommandRunner;
 import com.google.devtools.moe.client.FileSystem;
 import com.google.devtools.moe.client.testing.AppContextForTesting;
-
-import junit.framework.TestCase;
+import com.google.devtools.moe.client.tools.FileDifference.Comparison;
 
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 
 import java.io.File;
+
+import junit.framework.TestCase;
 
 /**
  * @author dbentley@google.com (Daniel Bentley)

@@ -13,13 +13,13 @@ import com.google.devtools.moe.client.parser.RepositoryExpression;
 import com.google.devtools.moe.client.project.ProjectContext;
 import com.google.devtools.moe.client.testing.AppContextForTesting;
 
-import junit.framework.TestCase;
-
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 
 import java.io.File;
 import java.io.IOException;
+
+import junit.framework.TestCase;
 
 /**
  * Unit tests for inverse renaming

@@ -2,9 +2,9 @@
 
 package com.google.devtools.moe.client.testing;
 
-import com.google.devtools.moe.client.writer.WritingError;
 import com.google.devtools.moe.client.writer.Writer;
 import com.google.devtools.moe.client.writer.WriterCreator;
+import com.google.devtools.moe.client.writer.WritingError;
 
 import java.util.Map;
 

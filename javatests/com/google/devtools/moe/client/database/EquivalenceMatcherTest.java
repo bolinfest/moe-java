@@ -9,9 +9,9 @@ import com.google.devtools.moe.client.repositories.Revision;
 import com.google.devtools.moe.client.repositories.RevisionGraph;
 import com.google.devtools.moe.client.repositories.RevisionMetadata;
 
-import junit.framework.TestCase;
-
 import java.util.List;
+
+import junit.framework.TestCase;
 
 /**
  * Unit tests for EquivalenceMatcher.

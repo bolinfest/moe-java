@@ -2,7 +2,6 @@
 
 package com.google.devtools.moe.client;
 
-import com.google.devtools.moe.client.Ui;
 import com.google.devtools.moe.client.testing.AppContextForTesting;
 
 import junit.framework.TestCase;

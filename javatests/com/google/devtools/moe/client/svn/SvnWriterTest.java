@@ -20,13 +20,13 @@ import com.google.devtools.moe.client.repositories.RevisionMetadata;
 import com.google.devtools.moe.client.testing.AppContextForTesting;
 import com.google.devtools.moe.client.writer.DraftRevision;
 
-import junit.framework.TestCase;
-
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 
 import java.io.File;
 import java.util.List;
+
+import junit.framework.TestCase;
 
 /**
  * @author dbentley@google.com (Daniel Bentley)

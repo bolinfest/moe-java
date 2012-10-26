@@ -7,9 +7,8 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 
 import java.io.IOException;
-import java.io.StringReader;
 import java.io.StreamTokenizer;
-import java.lang.IllegalArgumentException;
+import java.io.StringReader;
 import java.util.List;
 import java.util.Map;
 

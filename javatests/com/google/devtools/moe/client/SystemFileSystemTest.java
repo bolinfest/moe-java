@@ -8,10 +8,10 @@ import com.google.common.io.Files;
 import com.google.devtools.moe.client.Ui.Task;
 import com.google.devtools.moe.client.testing.AppContextForTesting;
 
-import junit.framework.TestCase;
-
 import java.io.File;
 import java.io.IOException;
+
+import junit.framework.TestCase;
 
 /**
  * @author dbentley@google.com (Daniel Bentley)

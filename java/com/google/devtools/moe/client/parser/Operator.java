@@ -2,7 +2,6 @@
 
 package com.google.devtools.moe.client.parser;
 
-import java.lang.IllegalArgumentException;
 
 /**
  * Operators in the MOE Codebase Expression Language.

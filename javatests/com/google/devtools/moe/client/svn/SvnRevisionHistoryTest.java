@@ -17,8 +17,6 @@ import com.google.devtools.moe.client.repositories.RevisionMetadata;
 import com.google.devtools.moe.client.testing.AppContextForTesting;
 import com.google.devtools.moe.client.testing.DummyDb;
 
-import junit.framework.TestCase;
-
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 import org.w3c.dom.Document;
@@ -27,6 +25,8 @@ import org.w3c.dom.Element;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilderFactory;
+
+import junit.framework.TestCase;
 
 /**
  * @author dbentley@google.com

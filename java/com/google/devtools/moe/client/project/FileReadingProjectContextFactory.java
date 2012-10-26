@@ -2,13 +2,13 @@
 
 package com.google.devtools.moe.client.project;
 
-import java.io.File;
-import java.io.IOException;
-
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 import com.google.devtools.moe.client.AppContext;
 import com.google.devtools.moe.client.Ui;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  *

@@ -7,9 +7,9 @@ import static org.easymock.EasyMock.expect;
 import com.google.common.collect.ImmutableList;
 import com.google.devtools.moe.client.repositories.Repository;
 
-import junit.framework.TestCase;
-
 import org.easymock.EasyMock;
+
+import junit.framework.TestCase;
 
 /**
  * Class containing test cases for the ProjectContext.

@@ -20,14 +20,14 @@ import com.google.devtools.moe.client.repositories.RevisionMetadata;
 import com.google.devtools.moe.client.testing.AppContextForTesting;
 import com.google.devtools.moe.client.testing.DummyDb;
 
-import junit.framework.TestCase;
-
 import org.easymock.EasyMock;
 import org.easymock.IExpectationSetters;
 import org.easymock.IMocksControl;
 
 import java.util.List;
 import java.util.Set;
+
+import junit.framework.TestCase;
 
 /**
  * Unit tests for GitRevisionHistory.

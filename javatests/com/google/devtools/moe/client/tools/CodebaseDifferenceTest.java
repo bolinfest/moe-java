@@ -8,12 +8,12 @@ import com.google.common.collect.ImmutableSet;
 import com.google.devtools.moe.client.codebase.Codebase;
 import com.google.devtools.moe.client.tools.FileDifference.Comparison;
 
-import junit.framework.TestCase;
-
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 
 import java.io.File;
+
+import junit.framework.TestCase;
 
 /**
  * Tests CodebaseDifference by actually invoking diff.

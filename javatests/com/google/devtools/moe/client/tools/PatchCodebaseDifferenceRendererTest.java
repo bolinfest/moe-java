@@ -6,9 +6,9 @@ import com.google.common.collect.ImmutableSet;
 import com.google.devtools.moe.client.codebase.Codebase;
 import com.google.devtools.moe.client.parser.RepositoryExpression;
 
-import junit.framework.TestCase;
-
 import java.io.File;
+
+import junit.framework.TestCase;
 
 /**
  * @author dbentley@google.com (Daniel Bentley)

@@ -2,9 +2,9 @@
 
 package com.google.devtools.moe.client.svn;
 
-import junit.framework.TestCase;
-
 import java.io.File;
+
+import junit.framework.TestCase;
 
 /**
  * @author dbentley@google.com (Daniel Bentley)

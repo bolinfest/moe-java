@@ -20,12 +20,12 @@ import com.google.devtools.moe.client.repositories.RevisionMetadata;
 import com.google.devtools.moe.client.testing.AppContextForTesting;
 import com.google.devtools.moe.client.writer.DraftRevision;
 
-import junit.framework.TestCase;
-
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 
 import java.io.File;
+
+import junit.framework.TestCase;
 
 /**
  * Test HgWriter by expect()ing file system calls and hg commands to add/remove files.

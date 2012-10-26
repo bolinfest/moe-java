@@ -11,12 +11,12 @@ import com.google.devtools.moe.client.testing.AppContextForTesting;
 import com.google.devtools.moe.client.testing.InMemoryProjectContextFactory;
 import com.google.devtools.moe.client.testing.RecordingUi;
 
-import junit.framework.TestCase;
-
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 
 import java.io.File;
+
+import junit.framework.TestCase;
 
 /**
  * Tests for NoteEquivalenceDirective.

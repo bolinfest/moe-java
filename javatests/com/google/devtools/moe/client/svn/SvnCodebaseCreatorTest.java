@@ -2,6 +2,8 @@
 
 package com.google.devtools.moe.client.svn;
 
+import static org.easymock.EasyMock.expect;
+
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -15,9 +17,10 @@ import com.google.devtools.moe.client.repositories.Revision;
 import com.google.devtools.moe.client.testing.AppContextForTesting;
 
 import org.easymock.EasyMock;
-import static org.easymock.EasyMock.expect;
 import org.easymock.IMocksControl;
+
 import java.io.File;
+
 import junit.framework.TestCase;
 
 

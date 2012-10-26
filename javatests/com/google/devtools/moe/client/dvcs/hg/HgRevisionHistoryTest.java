@@ -20,13 +20,13 @@ import com.google.devtools.moe.client.repositories.RevisionMetadata;
 import com.google.devtools.moe.client.testing.AppContextForTesting;
 import com.google.devtools.moe.client.testing.DummyDb;
 
-import junit.framework.TestCase;
-
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 
 import java.io.File;
 import java.util.List;
+
+import junit.framework.TestCase;
 
 /**
  * Unit tests for HgRevisionHistory: that 'hg log' calls are as expected and parsed correctly.

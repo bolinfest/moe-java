@@ -13,13 +13,13 @@ import com.google.devtools.moe.client.codebase.Codebase;
 import com.google.devtools.moe.client.testing.AppContextForTesting;
 import com.google.gson.JsonObject;
 
-import junit.framework.TestCase;
-
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 
 import java.io.File;
 import java.util.Map;
+
+import junit.framework.TestCase;
 
 /**
  */

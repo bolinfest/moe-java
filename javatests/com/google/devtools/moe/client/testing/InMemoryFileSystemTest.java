@@ -8,9 +8,9 @@ import com.google.devtools.moe.client.AppContext;
 import com.google.devtools.moe.client.FileSystem.Lifetime;
 import com.google.devtools.moe.client.Lifetimes;
 
-import junit.framework.TestCase;
-
 import java.io.File;
+
+import junit.framework.TestCase;
 
 /**
  * Unit tests for {@link InMemoryFileSystem}.

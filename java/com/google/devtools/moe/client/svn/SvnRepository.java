@@ -4,12 +4,12 @@ package com.google.devtools.moe.client.svn;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
+import com.google.devtools.moe.client.AppContext;
+import com.google.devtools.moe.client.CommandRunner;
 import com.google.devtools.moe.client.project.InvalidProject;
 import com.google.devtools.moe.client.project.RepositoryConfig;
 import com.google.devtools.moe.client.project.RepositoryType;
 import com.google.devtools.moe.client.repositories.Repository;
-import com.google.devtools.moe.client.AppContext;
-import com.google.devtools.moe.client.CommandRunner;
 
 import java.util.List;
 

@@ -13,12 +13,12 @@ import com.google.devtools.moe.client.Lifetimes;
 import com.google.devtools.moe.client.project.RepositoryConfig;
 import com.google.devtools.moe.client.testing.AppContextForTesting;
 
-import junit.framework.TestCase;
-
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 
 import java.io.File;
+
+import junit.framework.TestCase;
 
 /**
  * Unit tests for GitClonedRepository.

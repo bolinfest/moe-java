@@ -12,13 +12,13 @@ import com.google.devtools.moe.client.FileSystem;
 import com.google.devtools.moe.client.Ui;
 import com.google.devtools.moe.client.testing.AppContextForTesting;
 
-import junit.framework.TestCase;
-
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 
 import java.io.File;
 import java.util.List;
+
+import junit.framework.TestCase;
 
 /**
  * Unit tests for the CodebaseMerger class.

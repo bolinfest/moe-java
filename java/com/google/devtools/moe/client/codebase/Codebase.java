@@ -3,8 +3,8 @@
 package com.google.devtools.moe.client.codebase;
 
 import com.google.devtools.moe.client.AppContext;
-import com.google.devtools.moe.client.Utils;
 import com.google.devtools.moe.client.MoeProblem;
+import com.google.devtools.moe.client.Utils;
 import com.google.devtools.moe.client.parser.Expression;
 
 import java.io.File;

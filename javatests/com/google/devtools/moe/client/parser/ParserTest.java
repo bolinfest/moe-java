@@ -7,10 +7,10 @@ import static com.google.devtools.moe.client.parser.Parser.tokenize;
 import com.google.common.collect.ImmutableMap;
 import com.google.devtools.moe.client.parser.Parser.ParseError;
 
-import junit.framework.TestCase;
-
 import java.util.List;
 import java.util.Map;
+
+import junit.framework.TestCase;
 
 /**
  * @author dbentley@google.com (Daniel Bentley)

@@ -17,12 +17,12 @@ import com.google.devtools.moe.client.project.RepositoryConfig;
 import com.google.devtools.moe.client.testing.AppContextForTesting;
 import com.google.devtools.moe.client.writer.DraftRevision;
 
-import junit.framework.TestCase;
-
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 
 import java.io.File;
+
+import junit.framework.TestCase;
 
 /**
  * Test GitWriter by expect()ing file system calls and git commands to add/remove files.

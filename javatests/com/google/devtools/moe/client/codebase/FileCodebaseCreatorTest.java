@@ -13,14 +13,14 @@ import com.google.devtools.moe.client.MoeProblem;
 import com.google.devtools.moe.client.testing.AppContextForTesting;
 import com.google.devtools.moe.client.testing.FileCodebaseCreator;
 
-import junit.framework.TestCase;
-
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+
+import junit.framework.TestCase;
 
 /**
  * Tests for the FileCodebaseCreator class.

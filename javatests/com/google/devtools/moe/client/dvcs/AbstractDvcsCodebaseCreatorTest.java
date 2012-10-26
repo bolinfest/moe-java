@@ -17,13 +17,13 @@ import com.google.devtools.moe.client.repositories.Revision;
 import com.google.devtools.moe.client.repositories.RevisionHistory;
 import com.google.devtools.moe.client.testing.AppContextForTesting;
 
-import junit.framework.TestCase;
-
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 
 import java.io.File;
 import java.util.Collections;
+
+import junit.framework.TestCase;
 
 /**
  * Tests for AbstractDvcsCodebaseCreator, esp. that create() archives at the right revision.

@@ -11,13 +11,13 @@ import com.google.devtools.moe.client.FileSystem;
 import com.google.devtools.moe.client.codebase.Codebase;
 import com.google.devtools.moe.client.testing.AppContextForTesting;
 
-import junit.framework.TestCase;
-
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 
 import java.io.File;
 import java.util.Vector;
+
+import junit.framework.TestCase;
 
 /**
  *

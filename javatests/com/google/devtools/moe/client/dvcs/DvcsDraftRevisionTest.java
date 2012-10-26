@@ -6,12 +6,12 @@ import static org.easymock.EasyMock.expect;
 
 import com.google.devtools.moe.client.codebase.LocalClone;
 
-import junit.framework.TestCase;
-
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 
 import java.io.File;
+
+import junit.framework.TestCase;
 
 /**
  */

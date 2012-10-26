@@ -17,12 +17,12 @@ import com.google.devtools.moe.client.testing.AppContextForTesting;
 import com.google.devtools.moe.client.testing.InMemoryFileSystem;
 import com.google.devtools.moe.client.testing.InMemoryProjectContextFactory;
 
-import junit.framework.TestCase;
-
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
 
 import java.io.File;
+
+import junit.framework.TestCase;
 
 /**
  * Tests for {@link BookkeepingDirective}. DummyRepository is used, and per the bookkeeping flow,

@@ -2,22 +2,24 @@
 
 package com.google.devtools.moe.client.editors;
 
+import static org.easymock.EasyMock.expect;
+
 import com.google.common.collect.ImmutableList;
 import com.google.devtools.moe.client.AppContext;
 import com.google.devtools.moe.client.CommandRunner;
 import com.google.devtools.moe.client.FileSystem;
+import com.google.devtools.moe.client.MoeProblem;
 import com.google.devtools.moe.client.codebase.Codebase;
 import com.google.devtools.moe.client.testing.AppContextForTesting;
-import com.google.devtools.moe.client.MoeProblem;
 
 import org.easymock.EasyMock;
-import static org.easymock.EasyMock.expect;
 import org.easymock.IMocksControl;
-import junit.framework.TestCase;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+
+import junit.framework.TestCase;
 
 /**
  */
