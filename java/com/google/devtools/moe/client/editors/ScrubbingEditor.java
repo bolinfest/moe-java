@@ -16,7 +16,10 @@ import com.google.gson.JsonObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
+
+import javax.annotation.Nullable;
 
 /**
  * A ScrubbingEditor invokes the MOE scrubber on a Codebase.
@@ -24,6 +27,18 @@ import java.util.Map;
  * @author dbentley@google.com (Daniel Bentley)
  */
 public class ScrubbingEditor implements Editor {
+
+  private static final String ABSOLUTE_PATH_TO_SCRUBBER_DOT_PAR =
+      "/devtools/moe/scrubber/scrubber.par";
+
+  private static final boolean USE_DOT_SCRUBBER_PAR =
+      new File(ABSOLUTE_PATH_TO_SCRUBBER_DOT_PAR).exists();
+
+  /**
+   * If set, must be an absolute path, and it must reference an executable.
+   */
+  @Nullable
+  private static final String pathToScrubberDotPy = System.getProperty("moe.scrubber");
 
   /**
    * A {@code Supplier} that extracts the scrubber binary. We use a Supplier because we don't want
@@ -37,7 +52,7 @@ public class ScrubbingEditor implements Editor {
           try {
             // TODO(dbentley): what will this resource be under ant?
             File scrubberBinary =
-                AppContext.RUN.fileSystem.getResourceAsFile("/devtools/moe/scrubber/scrubber.par");
+                AppContext.RUN.fileSystem.getResourceAsFile(ABSOLUTE_PATH_TO_SCRUBBER_DOT_PAR);
             AppContext.RUN.fileSystem.setExecutable(scrubberBinary);
             return scrubberBinary;
           } catch (IOException ioEx) {
@@ -73,17 +88,23 @@ public class ScrubbingEditor implements Editor {
     File outputTar = new File(tempDir, "scrubbed.tar");
 
     try {
-      AppContext.RUN.cmd.runCommand(
-          // The ./ preceding scrubber.par is sometimes needed.
-          // TODO(user): figure out why
-          "./scrubber.par",
-          ImmutableList.of(
-              "--temp_dir", tempDir.getAbsolutePath(),
-              "--output_tar", outputTar.getAbsolutePath(),
-              // TODO(dbentley): allow configuring the scrubber config
-              "--config_data", (scrubberConfig == null) ? "{}" : scrubberConfig.toString(),
-              input.getPath().getAbsolutePath()),
-          SCRUBBER_BINARY_SUPPLIER.get().getParentFile().getPath());
+      List<String> scrubberParams = ImmutableList.of(
+          "--temp_dir", tempDir.getAbsolutePath(),
+          "--output_tar", outputTar.getAbsolutePath(),
+          // TODO(dbentley): allow configuring the scrubber config
+          "--config_data", (scrubberConfig == null) ? "{}" : scrubberConfig.toString(),
+          input.getPath().getAbsolutePath());
+      if (USE_DOT_SCRUBBER_PAR) {
+        AppContext.RUN.cmd.runCommand(
+            ABSOLUTE_PATH_TO_SCRUBBER_DOT_PAR,
+            scrubberParams,
+            null /* workingDirectory */);
+      } else {
+        AppContext.RUN.cmd.runCommand(
+            pathToScrubberDotPy,
+            scrubberParams,
+            null /* workingDirectory */);
+      }
     } catch (CommandRunner.CommandException e) {
       throw new MoeProblem(e.getMessage());
     }
