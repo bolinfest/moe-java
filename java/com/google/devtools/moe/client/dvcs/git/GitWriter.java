@@ -12,6 +12,7 @@ import com.google.devtools.moe.client.Ui;
 import com.google.devtools.moe.client.dvcs.AbstractDvcsWriter;
 import com.google.devtools.moe.client.repositories.RevisionMetadata;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -19,6 +20,12 @@ import java.util.List;
  * branch from master at last equivalence revision.
  */
 public class GitWriter extends AbstractDvcsWriter<GitClonedRepository> {
+
+  /**
+   * Date format that Git expects when specifying a date to {@code git commit}.
+   */
+  private static final SimpleDateFormat GIT_DATE_TIME_FORMAT =
+      new SimpleDateFormat("EEE MMM dd HH:mm:ss yyyy Z");
 
   static final String DEFAULT_BRANCH_NAME = "master";
   
@@ -53,10 +60,19 @@ public class GitWriter extends AbstractDvcsWriter<GitClonedRepository> {
   @Override
   protected void commitChanges(RevisionMetadata rm) throws CommandException {
     List<String> args = Lists.newArrayList("commit", "--all", "--message", rm.description);
+
+    // Preserve the author if the fully-formatted version is available.
     if (rm.fullAuthor != null) {
       args.add("--author");
       args.add(rm.fullAuthor);
     }
+
+    // Preserve the timestamp if the normalized time is available.
+    if (rm.normalizedDate != null) {
+      args.add("--date");
+      args.add(GIT_DATE_TIME_FORMAT.format(rm.normalizedDate));
+    }
+
     revClone.runGitCommand(args);
   }
   

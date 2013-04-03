@@ -13,12 +13,22 @@ import com.google.devtools.moe.client.repositories.AbstractRevisionHistory;
 import com.google.devtools.moe.client.repositories.Revision;
 import com.google.devtools.moe.client.repositories.RevisionMetadata;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
  * A Git implementation of {@link AbstractRevisionHistory}.
  */
 public class GitRevisionHistory extends AbstractRevisionHistory {
+
+  /**
+   * Formatter that recognizes the RFC 2822 format. Git will produce
+   * dates in this format when {@code --date=rfc} is used.
+   */
+  private static final SimpleDateFormat RFC_2822_DATE_TIME_FORMAT =
+      new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z");
 
   @VisibleForTesting static final String LOG_DELIMITER = "---@MOE@---";
 
@@ -88,6 +98,8 @@ public class GitRevisionHistory extends AbstractRevisionHistory {
           // Ensure one revision only, to be safe.
           "--max-count=1",
           "--format=" + format,
+          // Specify the date format so it can be parsed easily.
+          "--date=rfc",
           revision.revId);
     } catch (CommandException e) {
       throw new MoeProblem(
@@ -113,13 +125,23 @@ public class GitRevisionHistory extends AbstractRevisionHistory {
       parentBuilder.add(new Revision(parent, headCloneSupplier.get().getRepositoryName()));
     }
 
+    String date = split.get(3);
+    Date normalizedDate;
+    try {
+      normalizedDate = RFC_2822_DATE_TIME_FORMAT.parse(date);
+    } catch (ParseException e) {
+      throw new MoeProblem(String.format(
+          "Failed to parse date '%s' from revision %s.", date, split.get(0)));
+    }
+
     return new RevisionMetadata(
         split.get(0),  // id
         split.get(1),  // author
-        split.get(3),  // date
+        date,
         split.get(5),  // description
         parentBuilder.build(), // parents
-        split.get(2)); // fullAuthor
+        split.get(2),  // fullAuthor
+        normalizedDate);
   }
   
   @Override

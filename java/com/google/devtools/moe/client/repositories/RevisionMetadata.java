@@ -7,6 +7,7 @@ import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -32,25 +33,30 @@ public class RevisionMetadata {
   @Nullable
   public final String fullAuthor;
 
+  @Nullable
+  public final Date normalizedDate;
+
   public RevisionMetadata(String id, String author, String date,
       String description, List<Revision> parents) {
-    this(id, author, date, description, parents, null /* fullAuthor */ );
+    this(id, author, date, description, parents, null /* fullAuthor */, null /* normalizedDate */);
   }
 
   public RevisionMetadata(String id, String author, String date,
                           String description, List<Revision> parents,
-                          @Nullable String fullAuthor) {
+                          @Nullable String fullAuthor,
+                          @Nullable Date normalizedDate) {
     this.id = id;
     this.author = author;
     this.date = date;
     this.description = description;
     this.parents = parents;
     this.fullAuthor = fullAuthor;
+    this.normalizedDate = normalizedDate;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(id, author, date, description, parents, fullAuthor);
+    return Objects.hashCode(id, author, date, description, parents, fullAuthor, normalizedDate);
   }
 
   @Override
@@ -62,15 +68,23 @@ public class RevisionMetadata {
               Objects.equal(date, revisionMetadataObj.date) &&
               Objects.equal(description, revisionMetadataObj.description) &&
               Objects.equal(parents, revisionMetadataObj.parents) &&
-              Objects.equal(fullAuthor, revisionMetadataObj.fullAuthor));
+              Objects.equal(fullAuthor, revisionMetadataObj.fullAuthor) &&
+              Objects.equal(normalizedDate, revisionMetadataObj.normalizedDate));
     }
     return false;
   }
 
   @Override
   public String toString() {
-    return String.format("id: %s\nauthor: %s\ndate: %s\ndescription: %s\nparents: %s\nfullAuthor: %s",
-        id, author, date, description, Joiner.on(",").join(parents), fullAuthor);
+    return Objects.toStringHelper(this.getClass())
+        .add("id", id)
+        .add("author", author)
+        .add("date", date)
+        .add("description", description)
+        .add("parents", Joiner.on(",").join(parents))
+        .add("fullAuthor", fullAuthor)
+        .add("normalizedDate", normalizedDate)
+        .toString();
   }
 
   /**
@@ -90,6 +104,10 @@ public class RevisionMetadata {
     // select the last non-null fullAuthor from the sequence of revisions.
     String newFullAuthor = null;
 
+    // Similarly, it is not practical to concatenate dates, so
+    // select the last non-null normalizedDate from the sequence of revisions.
+    Date newNormalizedDate = null;
+
     for (RevisionMetadata rm : rms) {
       idBuilder.add(rm.id);
       authorBuilder.add(rm.author);
@@ -98,6 +116,9 @@ public class RevisionMetadata {
       parentBuilder.addAll(rm.parents);
       if (rm.fullAuthor != null) {
         newFullAuthor = rm.fullAuthor;
+      }
+      if (rm.normalizedDate != null) {
+        newNormalizedDate = rm.normalizedDate;
       }
     }
 
@@ -112,6 +133,13 @@ public class RevisionMetadata {
     String newDesc = Joiner.on("\n-------------\n").join(descBuilder.build());
     ImmutableList<Revision> newParents = parentBuilder.build();
 
-    return new RevisionMetadata(newId, newAuthor, newDate, newDesc, newParents, newFullAuthor);
+    return new RevisionMetadata(
+        newId,
+        newAuthor,
+        newDate,
+        newDesc,
+        newParents,
+        newFullAuthor,
+        newNormalizedDate);
   }
 }
