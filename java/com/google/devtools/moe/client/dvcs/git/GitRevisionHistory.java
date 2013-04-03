@@ -78,8 +78,8 @@ public class GitRevisionHistory extends AbstractRevisionHistory {
                         revision.revId, revision.repositoryName, headClone.getRepositoryName()));
     }
 
-    // Format: hash, author, date, parents, full commit message (subject and body)
-    String format = Joiner.on(LOG_DELIMITER).join("%H", "%an", "%ad", "%P", "%B");
+    // Format: hash, author, fullAuthor, date, parents, full commit message (subject and body)
+    String format = Joiner.on(LOG_DELIMITER).join("%H", "%an", "%aN <%cE>", "%ad", "%P", "%B");
 
     String log;
     try {
@@ -103,22 +103,23 @@ public class GitRevisionHistory extends AbstractRevisionHistory {
    * @param log  the output of getMetadata to parse
    */
   @VisibleForTesting RevisionMetadata parseMetadata(String log) {
-    // Split on the log delimiter. Limit to 5 so that it will act correctly
+    // Split on the log delimiter. Limit to 6 so that it will act correctly
     // even if the log delimiter happens to be in the commit message.
-    List<String> split = ImmutableList.copyOf(Splitter.on(LOG_DELIMITER).limit(5).split(log));
+    List<String> split = ImmutableList.copyOf(Splitter.on(LOG_DELIMITER).limit(6).split(log));
 
     // The fourth item contains all of the parents, each separated by a space.
     ImmutableList.Builder<Revision> parentBuilder = ImmutableList.<Revision>builder();
-    for (String parent : Splitter.on(" ").omitEmptyStrings().split(split.get(3))) {
+    for (String parent : Splitter.on(" ").omitEmptyStrings().split(split.get(4))) {
       parentBuilder.add(new Revision(parent, headCloneSupplier.get().getRepositoryName()));
     }
 
     return new RevisionMetadata(
         split.get(0),  // id
         split.get(1),  // author
-        split.get(2),  // date
-        split.get(4),  // description
-        parentBuilder.build());  // parents
+        split.get(3),  // date
+        split.get(5),  // description
+        parentBuilder.build(), // parents
+        split.get(2)); // fullAuthor
   }
   
   @Override

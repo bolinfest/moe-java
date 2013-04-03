@@ -162,6 +162,16 @@ public class GitClonedRepository implements LocalClone {
    * @return a string containing the STDOUT result
    */
   String runGitCommand(String... args) throws CommandException {
+    return runGitCommand(ImmutableList.copyOf(args));
+  }
+
+  /**
+   * Runs a git command with the given arguments, in this cloned repository's directory.
+   *
+   * @param args a list of arguments for git
+   * @return a string containing the STDOUT result
+   */
+  String runGitCommand(Iterable<String> args) throws CommandException {
     return AppContext.RUN.cmd.runCommand("git", ImmutableList.copyOf(args),
         getLocalTempDir().getAbsolutePath() /*workingDirectory*/);
   }

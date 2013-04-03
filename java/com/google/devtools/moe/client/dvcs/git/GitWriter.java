@@ -4,6 +4,7 @@ package com.google.devtools.moe.client.dvcs.git;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import com.google.devtools.moe.client.AppContext;
 import com.google.devtools.moe.client.CommandRunner.CommandException;
 import com.google.devtools.moe.client.MoeProblem;
@@ -51,7 +52,12 @@ public class GitWriter extends AbstractDvcsWriter<GitClonedRepository> {
   
   @Override
   protected void commitChanges(RevisionMetadata rm) throws CommandException {
-    revClone.runGitCommand("commit", "--all", "--message", rm.description);    
+    List<String> args = Lists.newArrayList("commit", "--all", "--message", rm.description);
+    if (rm.fullAuthor != null) {
+      args.add("--author");
+      args.add(rm.fullAuthor);
+    }
+    revClone.runGitCommand(args);
   }
   
   @Override
