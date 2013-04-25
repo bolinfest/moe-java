@@ -3,6 +3,7 @@
 package com.google.devtools.moe.client.logic;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Iterables;
 import com.google.devtools.moe.client.project.ProjectContext;
 import com.google.devtools.moe.client.repositories.MetadataScrubber;
 import com.google.devtools.moe.client.repositories.MetadataScrubberConfig;
@@ -43,8 +44,10 @@ public class DetermineMetadataLogic {
                                            @Nullable MetadataScrubberConfig sc,
                                            @Nullable Revision fromRevision) {
     ImmutableList.Builder<RevisionMetadata> rmBuilder = ImmutableList.builder();
-    List<MetadataScrubber> scrubbers =
+    Iterable<MetadataScrubber> scrubbers =
         (sc == null) ? ImmutableList.<MetadataScrubber>of() : sc.getScrubbers();
+
+    scrubbers = Iterables.concat(scrubbers, ImmutableList.of(ArcanistMetadataScrubber.SINGLETON));
 
     for (Revision rev : revs) {
       RevisionMetadata rm =
@@ -56,5 +59,32 @@ public class DetermineMetadataLogic {
     }
 
     return RevisionMetadata.concatenate(rmBuilder.build(), fromRevision);
+  }
+
+  /**
+   * Strips certain metadata added by Arcanist (https://github.com/facebook/arcanist).
+   */
+  private static class ArcanistMetadataScrubber extends MetadataScrubber {
+
+    private static final ArcanistMetadataScrubber SINGLETON = new ArcanistMetadataScrubber();
+
+    private ArcanistMetadataScrubber() {}
+
+    @Override
+    public RevisionMetadata scrub(RevisionMetadata rm) {
+      String description = rm.description;
+      int index = description.indexOf("\n\nReviewers:");
+      if (index >= 0) {
+        // We add 1 to keep the trailing newline.
+        description = description.substring(0, index);
+        if (!description.endsWith("\n")) {
+          description += "\n";
+        }
+        return new RevisionMetadata(rm.id, rm.author, rm.date, description, rm.parents);
+      } else {
+        return rm;
+      }
+    }
+
   }
 }

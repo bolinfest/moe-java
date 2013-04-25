@@ -122,10 +122,15 @@ public class RevisionMetadata {
       }
     }
 
-    if (migrationFromRev != null) {
-      descBuilder.add("Created by MOE: http://code.google.com/p/moe-java\n" +
-                      "MOE_MIGRATED_REVID=" + migrationFromRev.revId);
-    }
+// We choose not to include this right now.
+// http://code.google.com/p/moe-java is light on documentation and we actually use
+// our fork of MOE from https://github.com/bolinfest/moe-java, which enables end users
+// to leverage the scrubber from http://code.google.com/p/make-open-easy/.
+//
+//    if (migrationFromRev != null) {
+//      descBuilder.add("Created by MOE: http://code.google.com/p/moe-java\n" +
+//                      "MOE_MIGRATED_REVID=" + migrationFromRev.revId);
+//    }
 
     String newId = Joiner.on(", ").join(idBuilder.build());
     String newAuthor = Joiner.on(", ").join(authorBuilder.build());
