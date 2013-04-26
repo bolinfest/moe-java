@@ -80,7 +80,14 @@ public class DetermineMetadataLogic {
         if (!description.endsWith("\n")) {
           description += "\n";
         }
-        return new RevisionMetadata(rm.id, rm.author, rm.date, description, rm.parents);
+        return new RevisionMetadata(
+            rm.id,
+            rm.author,
+            rm.date,
+            description,
+            rm.parents,
+            rm.fullAuthor,
+            rm.normalizedDate);
       } else {
         return rm;
       }
