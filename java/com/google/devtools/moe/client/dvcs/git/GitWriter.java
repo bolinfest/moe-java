@@ -43,20 +43,27 @@ public class GitWriter extends AbstractDvcsWriter<GitClonedRepository> {
 
   @Override
   protected void addFile(String relativeFilename) throws CommandException {
-    revClone.runGitCommand("add", relativeFilename);
+    addFileForcefully(relativeFilename);
   }
-  
+
   @Override
   protected void modifyFile(String relativeFilename) throws CommandException {
     // Put the modification in the git index.
-    revClone.runGitCommand("add", relativeFilename);
+    addFileForcefully(relativeFilename);
   }
-  
+
+  /**
+   * If the file being added is in .gitignore, then {@code -f} is required when adding it.
+   */
+  private void addFileForcefully(String relativeFilename) throws CommandException {
+    revClone.runGitCommand("add", "-f", relativeFilename);
+  }
+
   @Override
   protected void removeFile(String relativeFilename) throws CommandException {
     revClone.runGitCommand("rm", relativeFilename);
   }
-  
+
   @Override
   protected void commitChanges(RevisionMetadata rm) throws CommandException {
     List<String> args = Lists.newArrayList("commit", "--all", "--message", rm.description);
@@ -75,7 +82,7 @@ public class GitWriter extends AbstractDvcsWriter<GitClonedRepository> {
 
     revClone.runGitCommand(args);
   }
-  
+
   @Override
   protected boolean hasPendingChanges() {
     // NB(yparghi): There may be a simpler way to do this, e.g. git diff or git commit --dry-run
