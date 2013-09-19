@@ -30,7 +30,7 @@
 	<!-- Compiles the java code-->
 	<target name="compile" depends="clean">
                 <mkdir dir="${classes.dir}" />
-		<javac srcdir="${java.dir}" destdir="${classes.dir}" classpathref="classpath" target="1.6" source="1.6"/>
+		<javac srcdir="${java.dir}" destdir="${classes.dir}" classpathref="classpath" target="1.7" source="1.7"/>
 	</target>
 
 	<!--Creates the deployable jar file  -->
