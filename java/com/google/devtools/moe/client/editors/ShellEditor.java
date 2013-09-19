@@ -53,16 +53,17 @@ public class ShellEditor implements Editor {
     File tempDir = AppContext.RUN.fileSystem.getTemporaryDirectory("shell_run_");
     try {
      Utils.copyDirectory(input.getPath(), tempDir);
-    } catch (IOException e) {
-      throw new MoeProblem(e.getMessage());
-    } catch (CommandRunner.CommandException e) {
-      throw new MoeProblem(e.getMessage());
+    } catch (IOException | CommandRunner.CommandException e) {
+      throw new MoeProblem(e, "Failure when copying %s to %s.", input.getPath(), tempDir);
     }
     try {
       AppContext.RUN.cmd.runCommand("bash", ImmutableList.of("-c", this.commandString),
           tempDir.getAbsolutePath());
     } catch (CommandRunner.CommandException e) {
-      throw new MoeProblem(e.getMessage());
+      throw new MoeProblem(e,
+          "Failure when running bach -c '%s' in %s.",
+          commandString,
+          tempDir.getAbsolutePath());
     }
     return new Codebase(tempDir, input.getProjectSpace(), input.getExpression());
   }

@@ -13,10 +13,15 @@ public class MoeProblem extends RuntimeException {
   public String explanation;
 
   public MoeProblem(String explanation) {
-    this.explanation = explanation;
+    super(explanation);
   }
 
-  @Override
-  public String getMessage() { return explanation; }
+  public MoeProblem(Throwable cause, String explanation) {
+    super(explanation, cause);
+  }
+
+  public MoeProblem(Throwable cause, String explanationFormatString, Object... args) {
+    super(String.format(explanationFormatString, args), cause);
+  }
 
 }
