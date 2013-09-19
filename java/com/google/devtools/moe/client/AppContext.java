@@ -33,11 +33,12 @@ public class AppContext {
 
   public static void init() {
     Preconditions.checkState(RUN == null, "RUN already set.");
+    Ui ui = new SystemUi();
     RUN = new AppContext(
         new FileReadingProjectContextFactory(),
-        new SystemUi(),
+        ui,
         new SystemCommandRunner(),
-        new SystemFileSystem());
+        new SystemFileSystem(ui));
   }
 
 }

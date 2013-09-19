@@ -12,6 +12,12 @@ import com.google.common.io.Resources;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.FileVisitOption;
+import java.nio.file.FileVisitResult;
+import java.nio.file.FileVisitor;
+import java.nio.file.Path;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -25,6 +31,12 @@ import java.util.Set;
 public class SystemFileSystem implements FileSystem {
 
   private final Map<File, Lifetime> tempDirLifetimes = Maps.newHashMap();
+
+  private final Ui ui;
+
+  public SystemFileSystem(Ui ui) {
+    this.ui = Preconditions.checkNotNull(ui);
+  }
 
   @Override
   public File getTemporaryDirectory(String prefix) {
@@ -70,8 +82,41 @@ public class SystemFileSystem implements FileSystem {
    */
   @Override
   public Set<File> findFiles(File path) {
-    Set<File> result = Sets.newHashSet();
-    findFilesRecursiveHelper(path, result);
+    final Set<File> result = Sets.newHashSet();
+
+    FileVisitor<Path> visitor = new FileVisitor<Path>() {
+      @Override
+      public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+        return FileVisitResult.CONTINUE;
+      }
+
+      @Override
+      public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+        result.add(file.toFile());
+        return FileVisitResult.CONTINUE;
+      }
+
+      @Override
+      public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+        return FileVisitResult.CONTINUE;
+      }
+
+      @Override
+      public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+        return FileVisitResult.CONTINUE;
+      }
+    };
+
+    try {
+      java.nio.file.Files.walkFileTree(
+          path.toPath(),
+          EnumSet.of(FileVisitOption.FOLLOW_LINKS),
+          /* maxDepth */ Integer.MAX_VALUE,
+          visitor);
+    } catch (IOException e) {
+      ui.error(e, "Error while traversing " + path);
+    }
+
     return result;
   }
 
