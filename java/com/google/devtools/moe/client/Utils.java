@@ -13,6 +13,11 @@ import com.google.devtools.moe.client.CommandRunner.CommandException;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -67,7 +72,7 @@ public class Utils {
       doFunction.apply(file);
     }
   }
-  
+
   /** Delete files under baseDir whose paths relative to baseDir don't match the given Predicate. */
   public static void filterFiles(File baseDir, final Predicate<CharSequence> positiveFilter) {
     final URI baseUri = baseDir.toURI();
@@ -130,24 +135,29 @@ public class Utils {
       return;
     }
     AppContext.RUN.fileSystem.makeDirsForFile(dest);
-    if (AppContext.RUN.fileSystem.isFile(src)) {
-      AppContext.RUN.fileSystem.copyFile(src, dest);
-      return;
-    }
-    File[] files = AppContext.RUN.fileSystem.listFiles(src);
-    if (files != null) {
-      for (File subFile : files) {
-        File newFile = new File(dest,
-                                AppContext.RUN.fileSystem.getName(subFile));
-        if (AppContext.RUN.fileSystem.isDirectory(subFile)) {
-          copyDirectory(subFile, newFile);
-        } else {
-          AppContext.RUN.fileSystem.makeDirsForFile(newFile);
-          AppContext.RUN.fileSystem.copyFile(subFile, newFile);
+
+    final Path fromPath = src.toPath();
+    final Path toPath = dest.toPath();
+    SimpleFileVisitor<Path> copyDirVisitor = new SimpleFileVisitor<Path>() {
+
+      @Override
+      public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs)
+          throws IOException {
+        Path targetPath = toPath.resolve(fromPath.relativize(dir));
+        if (!java.nio.file.Files.exists(targetPath)) {
+          java.nio.file.Files.createDirectory(targetPath);
         }
+        return FileVisitResult.CONTINUE;
       }
-    }
-    return;
+
+      @Override
+      public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+        Path destPath = toPath.resolve(fromPath.relativize(file));
+        java.nio.file.Files.copy(file, destPath, StandardCopyOption.REPLACE_EXISTING);
+        return FileVisitResult.CONTINUE;
+      }
+    };
+    java.nio.file.Files.walkFileTree(src.toPath(), copyDirVisitor);
   }
 
   /**
