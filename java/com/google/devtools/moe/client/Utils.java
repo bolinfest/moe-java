@@ -153,7 +153,14 @@ public class Utils {
       @Override
       public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
         Path destPath = toPath.resolve(fromPath.relativize(file));
-        java.nio.file.Files.copy(file, destPath, StandardCopyOption.REPLACE_EXISTING);
+        if (java.nio.file.Files.isSymbolicLink(file)) {
+          java.nio.file.Files.deleteIfExists(destPath);
+          java.nio.file.Files.createSymbolicLink(
+              destPath,
+              java.nio.file.Files.readSymbolicLink(file));
+        } else {
+          java.nio.file.Files.copy(file, destPath, StandardCopyOption.REPLACE_EXISTING);
+        }
         return FileVisitResult.CONTINUE;
       }
     };
