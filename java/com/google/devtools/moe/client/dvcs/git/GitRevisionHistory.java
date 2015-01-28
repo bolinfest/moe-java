@@ -89,7 +89,7 @@ public class GitRevisionHistory extends AbstractRevisionHistory {
     }
 
     // Format: hash, author, fullAuthor, date, parents, full commit message (subject and body)
-    String format = Joiner.on(LOG_DELIMITER).join("%H", "%an", "%aN <%cE>", "%ad", "%P", "%B");
+    String format = Joiner.on(LOG_DELIMITER).join("%H", "%an", "%aN <%aE>", "%ad", "%P", "%B");
 
     String log;
     try {
